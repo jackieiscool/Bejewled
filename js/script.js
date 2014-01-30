@@ -25,7 +25,6 @@ $(document).ready(function() {
   			this.cells.push(cell);
   		}
   	}
-  	console.log(this.cells);
   }
 
   // Table for game board renders
@@ -47,13 +46,18 @@ $(document).ready(function() {
 
   // Here a color will be chosen for the board
   Cell.prototype.chooseColor = function() {
-
+  	var colors = ["red", "green", "orange", "blue", "white", "purple", "yellow"];
+  	var color = colors[Math.floor(Math.random()*colors.length)];
+  	console.log(color);
+  	return color;
   }
 
   // Here an underscore template (<td>) will be created and attached to cell
   // These templates will be attached to <table> created in board
   Cell.prototype.createSquare = function() {
-
+  	var template = _.template("<td>" + this.color + "</td>");
+  	var row = "#row_" + this.xCoordinate;
+  	$(row).append(template);
   }
 
 
