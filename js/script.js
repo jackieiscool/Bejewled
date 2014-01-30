@@ -55,7 +55,7 @@ $(document).ready(function() {
   // Here an underscore template (<td>) will be created and attached to cell
   // These templates will be attached to <table> created in board
   Cell.prototype.createSquare = function() {
-  	var template = _.template("<td>" + this.color + "</td>");
+  	var template = _.template("<td class=" + this.color + ">" + this.color + "</td>");
   	var row = "#row_" + this.xCoordinate;
   	$(row).append(template);
   }
