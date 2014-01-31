@@ -3,7 +3,7 @@ $(document).ready(function() {
 	// Game Class
 	function Game() {
 		// First a board is created
-    var board = new Board();
+    this.board = new Board();
   }
 
   // Board Class
@@ -14,7 +14,8 @@ $(document).ready(function() {
   	this.cells = [];
   	// All the cell objects are created
     this.makeCells();
-    
+
+    this.click();
   }
 
   // Makes cell objects and stores to board's cell array
@@ -35,6 +36,47 @@ $(document).ready(function() {
   		var template = _.template("<tr " + "id=row_" + i + " ></tr>");
   		$(".board").append(template);
   	};
+  }
+
+  // Swaps to cells
+  Board.prototype.swap = function(cell_1, cell_2) {
+    // alert("pausing");
+    var firstTd = $("#num" + cell_1.id);
+    var secondTd = $("#num" + cell_2.id);
+    // console.log(firstTd);
+    var tempContents = firstTd.contents().detach();
+    var class1 = firstTd.attr("class");
+    var class2 = secondTd.attr("class");
+    firstTd.append(secondTd.contents());
+    firstTd.attr( "class", class2 );
+    secondTd.append(tempContents);
+    secondTd.attr( "class", class1);
+  }
+
+  Board.prototype.click = function() {
+    var board = this;
+    var cells = this.cells;
+    $("td").click(function() {
+      var id = $(this).attr("id");
+      if (id[4]) {
+        var position1 = parseInt(id[3] + id[4]);
+      }
+      else {
+        var position1 = parseInt(id[3]);
+      };
+      var cell_1 = cells[position1];
+      $("td").click(function() {
+        var id = $(this).attr("id");
+        if (id[4]) {
+          var position2 = parseInt(id[3] + id[4]);
+        }
+        else {
+          var position2 = parseInt(id[3]);
+        };
+        var cell_2 = cells[position2];
+        board.swap(cell_1, cell_2);
+      });
+    });
   }
 
   // Cell Class
@@ -61,15 +103,18 @@ $(document).ready(function() {
   	var template = _.template("<td class=" + this.color + " id=num" + this.id + ">" + this.color + "</td>");
   	var row = "#row_" + this.xCoordinate;
   	$(row).append(template);
+    return template;
   }
 
   // Define what will happen when a square is clicked
   Cell.prototype.click = function() {
   	var id = "#num" + this.id
   	$(id).click( function() {
-  		console.log("clicked " + this.id);
+  		var firstCell = this;
   	});
   }
 
   var game = new Game();
+  // var board = game.board;
+  // board.swap(board.cells[0], board.cells[9]);
 });

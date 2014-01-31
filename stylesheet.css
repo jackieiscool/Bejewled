@@ -1,11 +1,16 @@
 body {
-	background-color:#AF71B0;
+	background-color:#666666;
 }
 
 table {
 	margin-left: auto;
 	margin-right: auto;
+	width: 50%;
 	background-color:#B2A6A4;
+}
+
+tr {
+	height: 50px;
 }
 
 .green {
